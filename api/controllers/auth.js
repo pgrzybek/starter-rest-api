@@ -57,7 +57,7 @@ const salt = bcrypt.genSaltSync(10);
 exports.profileAuth = function(req, res, next){ //should be async
     const {token} = req.cookies;
     if(!token){
-      res.json({msg: 'no user'})
+      res.json({})
     }else {
       try {
         jwt.verify(token, process.env.jwtSecret, {}, (err,info) => {
