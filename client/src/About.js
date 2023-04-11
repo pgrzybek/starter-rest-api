@@ -1,7 +1,7 @@
 export default function About(){
     return(
-        <section id="about" className="main style2 right dark fullscreen aboutContainer">
-        <div className="content box style2 aboutContent">
+        <section id="about" className="main style2">
+        <div className="content box">
             <header>
                 <h2 id="aboutHeading">Carmina Bernhardt</h2>
             </header>

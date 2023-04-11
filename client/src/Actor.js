@@ -1,27 +1,24 @@
 import { motion, spring, Variants } from "framer-motion"
 export default function Actor(props){
 
-    const {  bool, contentAnimate } = props;
-    console.log(`actor.js bool ${bool}`)
-    console.log(`actor.js contentAnimate: ${contentAnimate}`);
-    console.log(`actor.js contentAnimateStr: ${JSON.stringify(contentAnimate)}`);
+    // const {  bool, contentAnimate } = props;
+    // console.log(`actor.js bool ${bool}`)
+    // console.log(`actor.js contentAnimate: ${contentAnimate}`);
+    // console.log(`actor.js contentAnimateStr: ${JSON.stringify(contentAnimate)}`);
 
 
-    // const contentAnimate={
-    //     offscreen:{x:10000, opacity:0}, //initial
-    //     onscreen:{ //animated
-    //     x:0, 
-    //     opacity:1,
-    //     rotate:[0,10,0,10,0,10,0], //rotate from 0 to 10 to 0
-    //     transition: {
-    //         // type:"spring",
-    //         // bounce:0.1,
-    //         duration:1}
-    //   }
-    // }
-    // const {anim} = props
-
-    // console.log(`contentAnimate: ${contentAnimate}`, `anim: ${anim}`);
+    const contentAnimate={
+        offscreen:{x:10000, opacity:0}, //initial
+        onscreen:{ //animated
+        x:0, 
+        opacity:1,
+        // rotate:[0,10,0,10,0,10,0], //rotate from 0 to 10 to 0
+        transition: {
+            // type:"spring",
+            // bounce:0.1,
+            duration:1}
+      }
+    }
 
 
     return (

@@ -1,7 +1,30 @@
+import { motion, spring, Variants } from "framer-motion"
+
 export default function Script(){
+
+    const contentAnimate={
+        offscreen:{x:10000, opacity:0}, //initial
+        onscreen:{ //animated
+        x:0, 
+        opacity:1,
+        transition: {
+            duration:1}
+      }
+    }
+
     return(
-        <section id="script" className="main style2 right dark fullscreen">
-        <div className="content box style2">
+        <motion.section
+        id="script" 
+        className="main style2"
+        transition={{staggerChildren:0}} //passes the variants variable to the children with delay
+        initial= {"offscreen"} 
+        whileInView={"onscreen"}
+        viewport={{once:false, amount:0.1}} //animation takes place when 0.1 of the parent element is in view and will happen anytime this event takes place
+        >
+            <motion.div 
+                className="content box"
+                variants={contentAnimate}
+            >
             <header>
                 <h2 id="scriptHeading">Script consultancy</h2>
             </header>
@@ -35,7 +58,7 @@ export default function Script(){
 
             </div>
 
-        </div>
-    </section>
+        </motion.div>
+    </motion.section>
     )
 }

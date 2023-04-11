@@ -2,8 +2,8 @@ import {Link} from "react-router-dom";
 
 export default function BlogGallery(){
     return (
-        <section id="blogGallery" className="main style2 right dark fullscreen aboutContainer">
-        <div className="content box style2 aboutContent">
+        <section id="blogGallery" className="main style2">
+        <div className="content box">
             <header>
                 <h2 id="blogHeading">Blog</h2>
             </header>
@@ -53,7 +53,10 @@ export default function BlogGallery(){
                     </figure>
                 </div>
             </div>
-            <Link to="/posts" className="button style2 link">See more</Link> 
+            <div>
+                <Link to="/posts" className="button style2 link">See more</Link> 
+            </div>
+            
             
         </div>
     </section>

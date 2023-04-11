@@ -2381,7 +2381,7 @@ input, select, textarea {
 		}
 
 			.main.style3 .content > header {
-				margin-bottom: 2em;
+				margin-bottom: 40px;
 			}
 
 			.main.style3.primary {
@@ -2531,6 +2531,10 @@ input, select, textarea {
 				max-width: calc(100% - 1.5em);
 			}
 
+		}
+
+		.content.box > *{
+			padding-left: 6%;
 		}
 
 /* Footer */
@@ -2708,18 +2712,20 @@ input, select, textarea {
 	}
 
 }
+
+/* Blog gallery */
   
   .cardContainer {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: center;
+	justify-content: flex-start;
 	width: 100%;
-	margin: 20px 0 80px;
+	margin: 20px 0 30px;
   }
   
   .card {
 	width: 250px;
-	margin: 10px;
+	margin: 10px 20px 10px 0;
 	background-color: white;
 	box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5);
   }
@@ -2846,6 +2852,24 @@ input, select, textarea {
 
 }
 
+@media (max-width: 1310px) {
+	.cardContainer .card:last-child{
+		display: none;
+	}
+	.card {
+		margin: 10px 40px 10px 0;
+	  }
+  }
+
+  @media (max-width: 1064px) {
+	.cardContainer .card:last-child{
+		display: block;
+	}
+	.card {
+		margin: 20px 40px 20px 0;
+	  }
+  }
+
 /* Contact */
 
 	#contact {
@@ -2877,6 +2901,37 @@ input, select, textarea {
 
 		.calendly-inline-widget{
 			z-index: 1000;
+		}
+
+		.contactInfo span{
+			display: inline-block;
+			width: 270px;
+			text-align: end;
+			padding-right: 1rem;
+		}
+
+		.contactInfo a{
+			display: inline-block;
+			width: 275px;
+			text-align: start;
+		}
+		.contactInfo ul{
+			width: fit-content;
+			margin: 30px auto 0 auto;
+		}
+
+		.contactFormContainer hr{
+			border-top: solid 2px #e5e6e7;
+    		/* padding: 15px 0 0 0; */
+    		width: 100px;
+			
+		}
+		.contactFormContainer .divider{
+			height: 22px;
+		}
+
+		.contactFormContainer #bookCall{
+			visibility: hidden;
 		}
 
 		@media screen and (max-width: 736px) {
@@ -3115,3 +3170,5 @@ width: 38px;
 display: block;
 margin-bottom: 30px;
 }
+
+/* Modal */
