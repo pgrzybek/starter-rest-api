@@ -12,11 +12,14 @@ router.get('/profile',authController.profileAuth)
 router.post('/logout', authController.logout)
 
 
-
+router.post('/submitContactForm', homeController.submitContactForm)
 router.post('/post',uploadMiddleware.single('file'), homeController.createPost)
 router.put('/post',uploadMiddleware.single('file'), homeController.updatePost)
 router.get('/post',homeController.getPosts)
 router.get('/post/:id',homeController.getPost)
+
+
+
 
 
 module.exports = router

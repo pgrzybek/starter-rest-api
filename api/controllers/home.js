@@ -3,6 +3,7 @@ const Post = require('../models/Post')
 const fs = require('fs');
 const { jwt } = require('../config/jwt');
 require('dotenv').config({path: './config/.env'})
+const nodemailer = require('nodemailer');
 
 exports.createPost = async (req, res, next) => {
     const {originalname,path} = req.file;
@@ -72,3 +73,34 @@ exports.getPost = async (req, res, next) => {
     const postDoc = await Post.findById(id).populate('author', ['username']);
     res.json(postDoc);
 }
+
+exports.submitContactForm = async(req, res, next) => {
+  const { name, email, message } = req.body;
+
+  console.log('submitContactForm home controller user: ',process.env.user)
+  const transporter = nodemailer.createTransport({
+    host: 'smtp-relay.sendinblue.com',
+    port: 587,
+    auth: {
+      user: process.env.user,
+      pass: process.env.pass
+    }
+  });
+
+  const mailOptions = {
+    from: 'niallhm@gmail.com',
+    to: 'niallhm@gmail.com',
+    subject: 'New form submission',
+    text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log('Email sent');
+    res.status(200).send('Email sent successfully');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error sending email');
+  }
+};
+  
