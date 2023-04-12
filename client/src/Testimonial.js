@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, EffectCoverflow, Thumbs, Autoplay } from 'swiper';
+import { Navigation, Pagination, EffectCoverflow, Thumbs, Autoplay, FreeMode } from 'swiper';
 import { useState } from 'react';
 
 import 'swiper/css';
@@ -7,23 +7,38 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/thumbs';
+import "swiper/css/free-mode";
 
 export default function TestimonialSection() {
 
     const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   return (
+    <>
     <section id="testimonial" className="spacer">
       <div className="testimonial-section">
         <div className="testi-user-img">
-          <Swiper
-            className="gallery-thumbs"
-            spaceBetween={10}
-            slidesPerView={4}
-            // slideToClickedSlide
-            watchSlidesProgress
-            onSwiper={setThumbsSwiper}
-          >
+        <Swiper
+        className="gallery-thumbs"
+        effect={'coverflow'}
+        grabCursor={true}
+        centeredSlides={true}
+        loop={true}
+        slidesPerView={'auto'}
+        coverflowEffect={{
+          rotate: 0,
+          stretch: 0,
+          depth: 100,
+          modifier: 5.5,
+        }}
+        pagination={{ el: '.swiper-pagination', clickable: true }}
+        autoplay={{
+          delay: 3000, 
+          disableOnInteraction: false 
+        }}
+        thumbs={{swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null}}
+        modules={[EffectCoverflow, Pagination, Navigation, Autoplay, Thumbs, FreeMode]}
+      >
             <SwiperSlide>
               <img className="u3" src="http://placekitten.com/100/150" alt="" />
             </SwiperSlide>
@@ -41,16 +56,13 @@ export default function TestimonialSection() {
         <div className="user-saying">
           <Swiper
             className="testimonial"
-            spaceBetween={30}
             direction="vertical"
-            pagination={{ clickable: true }}
-            modules={[Navigation, Pagination, EffectCoverflow, Thumbs, Autoplay]}
-            autoplay={{
-              delay: 3000, 
-              disableOnInteraction: false 
-            }}
-            // thumbs={{ swiper: ".gallery-thumbs" }}
-            thumbs={{ swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null }}
+            onSwiper={setThumbsSwiper}
+            spaceBetween={10}
+            slidesPerView={1}
+            freeMode={true}
+            watchSlidesProgress={true}
+            modules={[FreeMode, Navigation, Thumbs]}
           >
             <SwiperSlide>
               <div className="quote">
@@ -96,5 +108,7 @@ export default function TestimonialSection() {
         </div>
     </div>
     </section>
+    </>
+    
     )
 }
