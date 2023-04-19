@@ -1,77 +1,126 @@
-const User = require('../models/User')
+// const User = require('../models/User')
 const Post = require('../models/Post')
-const fs = require('fs');
-const { jwt } = require('../config/jwt');
+// const fs = require('fs');
 require('dotenv').config({path: './config/.env'})
 const nodemailer = require('nodemailer');
+const cloudinary = require("../middleware/cloudinary");
 
 exports.createPost = async (req, res, next) => {
-    const {originalname,path} = req.file;
-    const parts = originalname.split('.');
-    const ext = parts[parts.length - 1];
-    const newPath = path+'.'+ext;
-    fs.renameSync(path, newPath);
-  
-    const {token} = req.cookies;
-    jwt.verify(token, process.env.jwtSecret, {}, async (err,info) => {
-      if (err) throw err;
+    try {
+      // Upload image to cloudinary
+      const result = await cloudinary.uploader.upload(req.file.path);
       const {title,summary,content} = req.body;
       const postDoc = await Post.create({
         title,
         summary,
         content,
-        cover:newPath,
-        author:info.id,
+        cover: result.secure_url,
+        cloudinaryId: result.public_id,
+        author:req.user.id
       });
+      console.log("Post has been added!");
       res.json(postDoc);
-    });
+    } catch (err) {
+      console.log(err);
+      res.status(404)
+    }
 }
 
 exports.updatePost = async (req, res, next) => {
-    let newPath = null;
-    if (req.file) {
-      const {originalname,path} = req.file;
-      const parts = originalname.split('.');
-      const ext = parts[parts.length - 1];
-      newPath = path+'.'+ext;
-      fs.renameSync(path, newPath);
-    }
-  
-    const {token} = req.cookies;
-    jwt.verify(token, process.env.jwtSecret, {}, async (err,info) => {
-      if (err) throw err;
-      const {id,title,summary,content} = req.body;
-      let postDoc = await Post.findById(id);
-      const isAuthor = JSON.stringify(postDoc.author) === JSON.stringify(info.id);
+  try {
+    const {id,title,summary,content} = req.body;
+    let newCover = null;
+    let postDoc = await Post.findById(id);
+
+      const isAuthor = JSON.stringify(postDoc.author) === JSON.stringify(req.user.id);
       if (!isAuthor) {
         return res.status(400).json('you are not the author');
+      }
+      if (req.file) {
+        // Upload new image to cloudinary
+        newCover = await cloudinary.uploader.upload(req.file.path);
+        //remove remove original file
+        await cloudinary.uploader.destroy(postDoc.cloudinaryId);
       }
       postDoc = {
         title,
         summary,
         content,
-        cover: newPath ? newPath : postDoc.cover,
+        cover: newCover ? newCover.secure_url : postDoc.cover,
+        cloudinaryId: newCover? newCover.public_id : postDoc.cloudinaryId,
       }
-  
       await Post.updateOne({_id: id}, postDoc);
-  
       res.json(postDoc);
-    });
+  } catch (error) {
+    console.log(error);
+    res.status(404)
+  }
+}
+
+exports.deletePost = async (req, res, next) => {
+    try {
+      const id = req.params.id;
+      let postDoc = await Post.findById(id);
+      const isAuthor = JSON.stringify(postDoc.author) === JSON.stringify(req.user.id);
+      if (!isAuthor) {
+          return res.status(400).json('you are not the author');
+        }
+      if(postDoc.cloudinaryId){
+        await cloudinary.uploader.destroy(postDoc.cloudinaryId);
+      }
+      await Post.deleteOne({ _id: id });
+      console.log("Deleted Post");
+      res.status(200).json('Deleted post');
+    } catch (error) {
+      console.log(error)
+      res.status(404).json('Delete failed')
+    }
 }
 
 exports.getPosts = async (req, res, next) => {
-    res.json(
-        await Post.find()
-          .populate('author', ['username'])
-          .sort({createdAt: -1})
-          .limit(20)
-      );
-}
+    try {
+      const skip = parseInt(req.query.skip) || 0; // default to skip 0 posts if query param is not provided
+      const limit = parseInt(req.query.limit) || 10; // default to 10 posts per page if limit query param is not provided
+      const startIndex = skip
+      const endIndex = skip + limit;
+  
+      const posts = await Post.find()
+      //populates the author field with username. Post model has ref to User model author:{type:Schema.Types.ObjectId, ref:'User'} so it can auto pull the username field
+        .populate("author", ["username"]) 
+        .sort({ createdAt: -1 })
+        .skip(startIndex)
+        .limit(limit);
+  
+      const totalPosts = await Post.countDocuments();
+  
+      const pagination = {
+        // currentPage: page,
+        totalPages: Math.ceil(totalPosts / limit),
+        hasNextPage: endIndex < totalPosts,
+        hasPreviousPage: startIndex > 0,
+      };
+  
+      res.json({ posts, pagination });
+    } catch (error) {
+      console.log(error);
+      res.status(404);
+    }
+  };
+  
+
+
+
 
 exports.getPost = async (req, res, next) => {
+  try {
     const {id} = req.params;
     const postDoc = await Post.findById(id).populate('author', ['username']);
     res.json(postDoc);
+  } catch (error) {
+    console.log(error);
+    res.status(404)
+  }
+
 }
 
 exports.submitContactForm = async(req, res, next) => {
