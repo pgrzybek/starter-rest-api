@@ -27,7 +27,7 @@ export default function LoginPage() {
   }
 
   if (redirect) {
-    return <Navigate to={'/'} />
+    return <Navigate to={'/posts'} />
   }
   return (
     <form className="login" onSubmit={login}>
@@ -40,7 +40,7 @@ export default function LoginPage() {
              placeholder="password"
              value={password}
              onChange={ev => setPassword(ev.target.value)}/>
-      <button>Login</button>
+      <input type="submit" value="Login"/>
     </form>
   );
 }

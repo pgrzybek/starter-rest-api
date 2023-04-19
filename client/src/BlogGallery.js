@@ -1,7 +1,27 @@
 import {Link} from "react-router-dom";
+import { useEffect, useState } from "react";
+import BlogCard from "./BlogCard";
 
 export default function BlogGallery(){
+    const [posts, setPosts] = useState([]);
+    const [pagination, setPagination] = useState({});
+
+    useEffect(() => {
+        const skip = 0
+        const limit = 4
+        fetch(`http://localhost:4000/post?skip=${skip}&limit=${limit}`)
+          .then((response) => response.json())
+          .then(({ posts, pagination }) => {
+            setPosts(posts);
+          });
+      }, []);
+
+      const currentPosts = posts.map((post) => (
+        <BlogCard key={post._id} {...post} />
+      ));
+
     return (
+
         <section id="blogGallery" className="main style2">
         <div className="content box">
             <header>
@@ -9,7 +29,19 @@ export default function BlogGallery(){
             </header>
             
             <div className="cardContainer">
-                <div className="card">
+                {currentPosts}
+            </div>
+            <div>
+                <Link to="/posts" className="button style2 link">See more</Link> 
+            </div>
+            
+            
+        </div>
+    </section>
+    )
+}
+
+{/* <div className="card">
                     <figure className="card__thumb">
                         <img src="https://source.unsplash.com/75S9fpDJVdo/300x510" alt="Picture by Kyle Cottrell" className="card__image"/>
                         <figcaption className="card__caption">
@@ -51,14 +83,4 @@ export default function BlogGallery(){
                             <a href="" className="card__button">Read more</a>
                         </figcaption>
                     </figure>
-                </div>
-            </div>
-            <div>
-                <Link to="/posts" className="button style2 link">See more</Link> 
-            </div>
-            
-            
-        </div>
-    </section>
-    )
-}
+                </div> */}

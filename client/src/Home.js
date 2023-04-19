@@ -26,16 +26,16 @@ export default function Home() {
 					</span>
 					<ul className="mainLinks">
 						<li>
-						<HashLink smooth to="#" className="button style2 link">Actor</HashLink>
+						<HashLink smooth to="/#actor" className="button style2 link">Actor</HashLink>
 						</li>
 						<li>
-						<HashLink smooth to="#" className="button style2 link">Coach</HashLink>
+						<HashLink smooth to="/#coach" className="button style2 link">Coach</HashLink>
 						</li>
 						<li>
-						<HashLink smooth to="#" className="button style2 link">Media Training</ HashLink>
+						<HashLink smooth to="/#mediaTraining" className="button style2 link">Media Training</ HashLink>
 						</li>
 						<li>
-						<HashLink smooth to="#" className="button style2 link">Script Consultancy</HashLink>
+						<HashLink smooth to="/#script" className="button style2 link">Script Consultancy</HashLink>
 						</li>
 					</ul>
 				</div>

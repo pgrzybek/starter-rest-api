@@ -1,0 +1,30 @@
+import { useEffect, useState } from "react";
+
+export const  useWindowSizeCheck = (breakPoint) => {
+
+    const [isSmallScreen, setIsSmallScreen] = useState(false)
+
+    // set window size to display different menu icon behaviour
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < breakPoint) {
+        setIsSmallScreen(true);
+      } else {
+        setIsSmallScreen(false);
+      }
+    };
+
+    // add event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // call handleResize initially
+    handleResize();
+
+    // remove event listener on component unmount
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+   
+  return isSmallScreen
+}

@@ -10,6 +10,7 @@ export default function CreatePost() {
   const [content,setContent] = useState('');
   const [files, setFiles] = useState('');
   const [redirect, setRedirect] = useState(false);
+
   async function createNewPost(ev) {
     const data = new FormData();
     data.set('title', title);
@@ -28,22 +29,30 @@ export default function CreatePost() {
   }
 
   if (redirect) {
-    return <Navigate to={'/'} />
+    return <Navigate to={'/posts'} />
   }
   return (
-    <form onSubmit={createNewPost}>
-      <input type="title"
-             placeholder={'Title'}
-             value={title}
-             onChange={ev => setTitle(ev.target.value)} />
-      <input type="summary"
-             placeholder={'Summary'}
-             value={summary}
-             onChange={ev => setSummary(ev.target.value)} />
-      <input type="file"
-             onChange={ev => setFiles(ev.target.files)} />
-      <Editor value={content} onChange={setContent} />
-      <button style={{marginTop:'5px'}}>Create post</button>
-    </form>
+    <div className="formWrapper">
+      <form className="createPost" onSubmit={createNewPost}>
+        <input type="title"
+              className="title"
+              placeholder={'Title'}
+              value={title}
+              onChange={ev => setTitle(ev.target.value)} />
+        <input type="summary"
+              className="summary"
+              placeholder={'Summary'}
+              value={summary}
+              onChange={ev => setSummary(ev.target.value)} />
+        <input type="file"
+              className="file"
+              onChange={ev => setFiles(ev.target.files)} />
+        <Editor className="editor" 
+                value={content} 
+                onChange={setContent} />
+        <button className="submit" style={{marginTop:'5px'}}>Create post</button>
+      </form>
+    </div>
+
   );
 }
