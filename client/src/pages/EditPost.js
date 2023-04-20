@@ -17,7 +17,7 @@ export default function EditPost() {
   
 
   useEffect(() => {
-    fetch('http://localhost:4000/post/'+id)
+    fetch('/post/'+id)
       .then(response => {
         response.json().then(postInfo => {
           setTitle(postInfo.title);
@@ -41,7 +41,7 @@ function rejectDelete(){
     const data = new FormData();
     data.set('id', id);
     
-    const response = await fetch(`http://localhost:4000/post/${id}`, {
+    const response = await fetch(`/post/${id}`, {
       method: 'DELETE',
       body: data,
       credentials: 'include',
@@ -62,7 +62,7 @@ function rejectDelete(){
     if (files?.[0]) {
       data.set('file', files?.[0]);
     }
-    const response = await fetch('http://localhost:4000/post', {
+    const response = await fetch('/post', {
       method: 'PUT',
       body: data,
       credentials: 'include',

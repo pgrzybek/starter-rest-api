@@ -12,7 +12,7 @@ export default function PostsPage() {
   useEffect(() => {
     const skip = currentPage * postsPerPage;
     const limit = postsPerPage;
-    fetch(`http://localhost:4000/post?skip=${skip}&limit=${limit}`)
+    fetch(`/post?skip=${skip}&limit=${limit}`)
       .then((response) => response.json())
       .then(({ posts, pagination }) => {
         setPosts(posts);
