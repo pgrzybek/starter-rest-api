@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/niallam22/carminas-a/issues"
   },
-  "homepage": "https://github.com/niallam22/carminas-a#readme"
+  "homepage": "https://github.com/niallam22/carminas-a#readme",
+  "dependencies": {
+    "react-scripts": "^5.0.1"
+  }
 }
