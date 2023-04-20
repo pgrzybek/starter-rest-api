@@ -9,7 +9,7 @@ export default function BlogGallery(){
     useEffect(() => {
         const skip = 0
         const limit = 4
-        fetch(`http://localhost:4000/post?skip=${skip}&limit=${limit}`)
+        fetch(`/post?skip=${skip}&limit=${limit}`)
           .then((response) => response.json())
           .then(({ posts, pagination }) => {
             setPosts(posts);

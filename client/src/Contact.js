@@ -15,7 +15,7 @@ export default function Contact() {
 			message: message
 		} 
 
-		fetch('http://localhost:4000/submitContactForm', {
+		fetch('/submitContactForm', {
 			method: 'POST',
 			body: JSON.stringify(formData),
 			headers: {
