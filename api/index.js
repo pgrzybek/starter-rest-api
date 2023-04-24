@@ -26,8 +26,13 @@ app.use(logger('dev'))
 
 app.use('/', mainRoutes)
 
-// Render React as View
+// Serve static files
 app.use(express.static(path.join(__dirname, "..", "client", "build")));
+
+// Catch-all route for serving index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
 
 app.listen(process.env.PORT, ()=>{
   console.log('Server is running, you better catch it!')
