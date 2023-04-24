@@ -10,8 +10,6 @@ require('dotenv').config({path: './config/.env'})
 
 connectDB()   
 
-// app.use(cors({credentials:true,origin:'http://localhost:3000'}));
-
 // Enable CORS for client origin only
 const corsOptions = {
   credentials:true,
