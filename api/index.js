@@ -16,6 +16,10 @@ const corsOptions = {
   origin : ['http://localhost:3000', 'https://localhost:3000'],
 }
 app.use(cors(corsOptions))
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
@@ -23,9 +27,20 @@ app.use(logger('dev'))
 
 app.use('/', mainRoutes)
 
+<<<<<<< HEAD
 // Render React as View
 app.use(express.static(path.join(__dirname, "..", "client", "build")));
 
+=======
+// Serve static files
+app.use(express.static(path.join(__dirname, "..", "client", "build")));
+
+// Catch-all route for serving index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
+
+>>>>>>> main
 app.listen(process.env.PORT, ()=>{
-  console.log('Server is running, you better catch it!')
+  console.log(`Server is running on port ${process.env.PORT}, you better catch it!`)
 })  
