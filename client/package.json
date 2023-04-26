@@ -1,4 +1,5 @@
 {
+  "proxy": "http://localhost:4000",
   "name": "client",
   "version": "0.1.0",
   "private": true,
@@ -34,6 +35,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "dev": "json-server --watch src/test/events.json --port 4000",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

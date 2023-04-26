@@ -5,7 +5,7 @@ import ReactPaginate from "react-paginate";
 export default function PostsPage() {
   const [posts, setPosts] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
-  const [pagination, setPagination] = useState({});
+  const [pageCount, setPageCount] = useState(1);
 
   const postsPerPage = 8;
 
@@ -16,12 +16,10 @@ export default function PostsPage() {
       .then((response) => response.json())
       .then(({ posts, pagination }) => {
         setPosts(posts);
-        setPagination(pagination);
+        setPageCount(Math.ceil(pagination.totalPages / postsPerPage));
       });
   }, [currentPage]);
   
-
-  const pageCount = Math.ceil(pagination.totalPages / postsPerPage);
 
   const handlePageClick = ({ selected: selectedPage }) => {
     setCurrentPage(selectedPage);
