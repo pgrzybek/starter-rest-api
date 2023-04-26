@@ -9,13 +9,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-<<<<<<< HEAD
     "dev": "json-server --watch src/test/events.json --port 4000",
     "eject": "react-scripts eject"
-=======
-    "eject": "react-scripts eject",
-    "dev": "json-server --watch src/test/events.json --port 4000"
->>>>>>> main
   },
   "eslintConfig": {
     "extends": [

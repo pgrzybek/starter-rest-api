@@ -33,8 +33,4 @@ async function run() {
   console.log(`Mongo server started on: ${uri}`);
 }
 
-<<<<<<< HEAD
 run();
-=======
-run();
->>>>>>> main
